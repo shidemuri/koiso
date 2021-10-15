@@ -1,0 +1,34 @@
+{
+  "name": "koiso",
+  "version": "2.1.3",
+  "description": "bot de musica legal",
+  "main": "main.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "opusscript": "0.0.8",
+    "scrape-youtube": "^2.1.9",
+    "ytdl-core-discord": "^1.3.1",
+    "ytpl": "^2.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "padero",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shidemuri/koiso.git"
+  },
+  "keywords": [
+    "discord",
+    "discord",
+    "music",
+    "bot",
+    "youtube"
+  ],
+  "bugs": {
+    "url": "https://github.com/shidemuri/koiso/issues"
+  },
+  "homepage": "https://github.com/shidemuri/koiso#readme"
+}
