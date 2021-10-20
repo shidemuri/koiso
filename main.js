@@ -20,11 +20,13 @@ function convert(millis) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
-async function tocar(con, url, ch, id){
+async function tocar(con, url, ch, id, skip){
+    try{
     if(!fila[con.channel.guild.id]) fila[con.channel.guild.id] = []
     if(url){
         if(ytdl.validateURL(url)) {
             if(id){ //evita q a mensagem seja enviada quando troca de musica
+            if(!skip){
             const thee = await ytdl.getBasicInfo(url)
             fila[con.channel.guild.id].push([thee.videoDetails.video_url, thee.videoDetails.title, thee.videoDetails.lengthSeconds*1000]) 
             const embeed = new MessageEmbed()
@@ -32,7 +34,7 @@ async function tocar(con, url, ch, id){
             .setTitle('Música adicionada')
             .setDescription(`[${thee.videoDetails.title}](${thee.videoDetails.video_url})`)
             ch.send(embeed)
-            }
+            }}
         } else if(await ytpl.validateID(url)){
             const playlist = await ytpl(url)
             for(const a of playlist.items) fila[con.channel.guild.id].push([a.shortUrl, a.title, a.durationSec*1000])
@@ -65,7 +67,7 @@ async function tocar(con, url, ch, id){
             .setDescription(`${Number(emojis.indexOf(video.first().emoji.name))+1} - [${url[1]}](${url[0]})`)
             ch.send(porro)
         }
-    }else url = fila[con.channel.guild.id][0]
+    } else url = fila[con.channel.guild.id][0]
     if(!con.dispatcher) { //dispatcher é basicamente o q o client tá reproduzindo em um canal de voz
         const merda = con.play(await ytdl(url), {type:"opus"})
         con.dispatcher.setVolume(0.6)
@@ -81,6 +83,9 @@ async function tocar(con, url, ch, id){
             if(!fila[con.channel.guild.id][0]) return con.disconnect() 
             tocar(con, fila[con.channel.guild.id][0], ch)
         })
+    }
+    } catch(e){
+        ch.send(new MessageEmbed().setTitle('Ops! o padero foi um macaco e cagou no código').setDescription(`Erro:\n\n\`\`\`${e}\`\`\`\n\n(se for erro 410 fala pra ele atualizar o ytdl)`).setColor(`#ff0000`))
     }
 }
 
@@ -108,7 +113,7 @@ client.on('message', async message => {
             fila[conn.channel.guild.id].shift()
             conn.dispatcher.destroy()
             if(!serverqueue[0]) return conn.disconnect()
-            tocar(message.guild.me.voice.connection)
+            tocar(message.guild.me.voice.connection, fila[conn.channel.guild.id][0], message.channel, message.author.id, true)
         break;
         case 'help':
             const ajuda = ["!!play <coisa pra pesquisar/link de video ou de playlist do youtoba> - toca música (óbvio seu retardado)",
