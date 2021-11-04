@@ -9,7 +9,8 @@ const prefixo = '!!'
 
 client.on('ready', () => {
     console.log('koiso momento xdddd')
-    client.user.setActivity('!!help - enfiando o braço no cu enquanto eu bato punheta pra nekopara')
+    setInterval(function(){
+    client.user.setActivity('!!help - ' + process.env.status)},5000)
 })
 
 const fila = new Object()
