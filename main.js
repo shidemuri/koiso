@@ -41,8 +41,8 @@ async function tocar(con, url, ch, id, skip){
             for(const a of playlist.items) fila[con.channel.guild.id].push([a.shortUrl, a.title, a.durationSec*1000])
             const porraaa = new MessageEmbed()
             .setColor(`#18ebf2`)
-            .setTitle('Playlist adicionada')
-            .setDescription(`Adicionado ${playlist.items.length} itens de [${playlist.title}](${playlist.url})`)
+            .setTitle('Playlist added')
+            .setDescription(`Added ${playlist.items.length} items from [${playlist.title}](${playlist.url})`)
             ch.send(porraaa)
             url = fila[con.channel.guild.id][0]
         } else {
@@ -54,7 +54,7 @@ async function tocar(con, url, ch, id, skip){
             }
             const emojis = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣']
             const vidros = new MessageEmbed()
-            .setTitle('escolha um video')
+            .setTitle('choose a video')
             .setDescription(videoslegal.join(`\n`))
             .setColor(`#18ebf2`)
             const porra = await ch.send(vidros)
@@ -64,7 +64,7 @@ async function tocar(con, url, ch, id, skip){
             fila[con.channel.guild.id].push(url)
             const porro = new MessageEmbed()
             .setColor(`#18ebf2`)
-            .setTitle('Música escolhida')
+            .setTitle('Song chosen')
             .setDescription(`${Number(emojis.indexOf(video.first().emoji.name))+1} - [${url[1]}](${url[0]})`)
             ch.send(porro)
         }
@@ -86,7 +86,7 @@ async function tocar(con, url, ch, id, skip){
         })
     }
     } catch(e){
-        ch.send(new MessageEmbed().setTitle('Ops! o padero foi um macaco e cagou no código').setDescription(`Erro:\n\n\`\`\`${e}\`\`\`\n\n(se for erro 410 fala pra ele atualizar o ytdl)`).setColor(`#ff0000`))
+        ch.send(new MessageEmbed().setTitle('padero monkey').setDescription(`Error:\n\n\`\`\`${e}\`\`\`\n\n(if its error 410 reinstall ytdl)`).setColor(`#ff0000`))
     }
 }
 
@@ -102,7 +102,7 @@ client.on('message', async message => {
         case 'play':
             if(!args[0]) return;
             const coisalegal = message.member.voice.channel
-            if(!coisalegal) return message.channel.send('entre em um canal primeiro burro')
+            if(!coisalegal) return message.channel.send('join a voice chat first dumbass')
             const porro = await coisalegal.join()
             tocar(porro, args.slice(0).join(` `), message.channel, message.author.id)
         break;
@@ -110,22 +110,22 @@ client.on('message', async message => {
             if(!fila[conn.channel.guild.id]) return console.log(1);
             if(!conn.dispatcher) return console.log(2);
             if(!message.member.voice.channel) return console.log(3);
-            if(message.member.voice.channel !== conn.channel) return message.channel.send("não")
+            if(message.member.voice.channel !== conn.channel) return message.channel.send("no")
             fila[conn.channel.guild.id].shift()
             conn.dispatcher.destroy()
             if(!serverqueue[0]) return conn.disconnect()
             tocar(message.guild.me.voice.connection, fila[conn.channel.guild.id][0], message.channel, message.author.id, true)
         break;
         case 'help':
-            const ajuda = ["!!play <coisa pra pesquisar/link de video ou de playlist do youtoba> - toca música (óbvio seu retardado)",
-            "!!skip - pula a musica",
-            "!!queue - mostra a fila do servidor",
-            "!!info - mostra a musica atual, quanto tempo falta pra acabar e o volume",
-            "!!volume <1-100 ou até mais fds> - muda o volume para seus queridos ouvidos se sentirem confortaveis",
-            "!!monke - macaco"]
+            const ajuda = ["!!play <search keywords>/video or playlist url> - plays stuff (obv retard)",
+            "!!skip - skips the current music",
+            "!!queue - shows the server queue",
+            "!!info - shows current music, current track position and volume",
+            "!!volume <0-100 or even more> - changes volume so your ears get confortable",
+            "!!monke - monke"]
             const punheta = new MessageEmbed()
-            .setTitle('ajuda')
-            .setDescription('bot de musica de merda do padero - prefixo: !!\n\n'+ajuda.join(`\n`))
+            .setTitle('help')
+            .setDescription('shit music bot by padero - prefixo: !!\n\n'+ajuda.join(`\n`))
             .setColor(`#18ebf2`)
             message.channel.send(punheta)
         break;
@@ -134,11 +134,11 @@ client.on('message', async message => {
             if(!message.member.voice.channel) return;
             var coisa = new Array()
             if(serverqueue.length > 20){
-                filaa.setTitle(`Fila do servidor - ${serverqueue.length} itens (mostrando apenas 20 por ser muito grande)`)
+                filaa.setTitle(`server queue - ${serverqueue.length} items (showing only 20 because its too big)`)
                 for(let a = 0; a < 20; a++) coisa.push(`${Number(a)+1} - [${serverqueue[a][1]}](${serverqueue[a][0]})`)
             } else {
                 for(const a in serverqueue) coisa.push(`${Number(a)+1} - [${serverqueue[a][1]}](${serverqueue[a][0]})`)
-                filaa.setTitle(`Fila do servidor - ${serverqueue.length} itens`)
+                filaa.setTitle(`server queue - ${serverqueue.length} items`)
             }
             filaa.setDescription(coisa.join(`\n`))
             message.channel.send(filaa)
@@ -152,7 +152,7 @@ client.on('message', async message => {
             tempo[Math.round((conn.dispatcher.streamTime/serverqueue[0][2])*10)] = '๏'
             tempo = tempo.join('') //transforma em array pq n tem uma função nativa que muda um caractere em certo índex
             tempo = tempo.split('๏')
-            tempo[0] = `[${tempo[0]}](https://www.youtube.com/watch?v=OReGUIdddJw)`
+            tempo[0] = `[${tempo[0]}](https://www.youtube.com/watch?v=Yq0zBXN1o2A)`
             tempo = tempo.join('๏')
             tempo = "**" + tempo + "**"
             const informação = [`[${serverqueue[0][1]}](${serverqueue[0][0]})`,
@@ -161,7 +161,7 @@ client.on('message', async message => {
             tempo
             ]
             const infoo = new MessageEmbed()
-            .setTitle('Info da música atual')
+            .setTitle('current music info')
             .setColor(`#18ebf2`)
             .setDescription(informação.join(`\n`))
             message.channel.send(infoo)
@@ -171,19 +171,19 @@ client.on('message', async message => {
             if(isNaN(args[0])) return;
             if(!message.member.voice.channel) return;
             conn.dispatcher.setVolume(Number(args[0])/100)
-            message.channel.send(`Volume atual: ${args[0]}`)
+            message.channel.send(`Current volume: ${args[0]}`)
         break;
         case 'monke':
             message.channel.send(new MessageEmbed().setColor(`#18ebf2`).setImage(`https://c.tenor.com/p9A-qL72haUAAAAC/monkey-spin-monkey.gif`))
         break;
         case "skipall":
-            if(message.author.id !== '828056235001118741') return message.channel.send('vai se fude')
+            if(message.author.id !== '828056235001118741') return message.channel.send('fuck you')
             fila[message.guild.id] = []
             conn.disconnect()
         break;
     }
     }catch(e){
-        message.channel.send(new MessageEmbed().setTitle('Ops! o padero foi um macaco e cagou no código').setDescription(`Erro:\n\n\`\`\`${e}\`\`\`\n\nvê se arruma essa merda seu retardado`).setColor(`#ff0000`))
+        message.channel.send(new MessageEmbed().setTitle('padero monke').setDescription(`Error:\n\n\`\`\`${e}\`\`\``).setColor(`#ff0000`))
     }
 })
 
