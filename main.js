@@ -32,7 +32,7 @@ async function tocar(con, url, ch, id, skip){
             fila[con.channel.guild.id].push([thee.videoDetails.video_url, thee.videoDetails.title, thee.videoDetails.lengthSeconds*1000]) 
             const embeed = new MessageEmbed()
             .setColor(`#18ebf2`)
-            .setTitle('Música adicionada')
+            .setTitle('Song added')
             .setDescription(`[${thee.videoDetails.title}](${thee.videoDetails.video_url})`)
             ch.send(embeed)
             }}
@@ -125,7 +125,7 @@ client.on('message', async message => {
             "!!monke - monke"]
             const punheta = new MessageEmbed()
             .setTitle('help')
-            .setDescription('shit music bot by padero - prefixo: !!\n\n'+ajuda.join(`\n`))
+            .setDescription('a really bad music bot i made a good while ago -padero prefix: !!\n\n'+ajuda.join(`\n`))
             .setColor(`#18ebf2`)
             message.channel.send(punheta)
         break;
@@ -152,7 +152,7 @@ client.on('message', async message => {
             tempo[Math.round((conn.dispatcher.streamTime/serverqueue[0][2])*10)] = '๏'
             tempo = tempo.join('') //transforma em array pq n tem uma função nativa que muda um caractere em certo índex
             tempo = tempo.split('๏')
-            tempo[0] = `[${tempo[0]}](https://www.youtube.com/watch?v=Yq0zBXN1o2A)`
+            tempo[0] = `[${tempo[0]}](https://www.youtube.com/watch?v=vv-Fqm6Qtj4)`
             tempo = tempo.join('๏')
             tempo = "**" + tempo + "**"
             const informação = [`[${serverqueue[0][1]}](${serverqueue[0][0]})`,
