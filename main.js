@@ -10,7 +10,7 @@ const prefixo = '!!'
 client.on('ready', () => {
     console.log('koiso momento xdddd')
     setInterval(function(){
-    client.user.setActivity('!!help - ' + process.env.status)},5000)
+    client.user.setActivity('!!help - oh god why do i exist')},5000)
 })
 
 const fila = new Object()
@@ -117,7 +117,7 @@ client.on('message', async message => {
             tocar(message.guild.me.voice.connection, fila[conn.channel.guild.id][0], message.channel, message.author.id, true)
         break;
         case 'help':
-            const ajuda = ["!!play <search keywords>/video or playlist url> - plays stuff (obv retard)",
+            const ajuda = ["!!play <search keywords>/video or playlist url> - plays stuff (obv you retard)",
             "!!skip - skips the current music",
             "!!queue - shows the server queue",
             "!!info - shows current music, current track position and volume",
